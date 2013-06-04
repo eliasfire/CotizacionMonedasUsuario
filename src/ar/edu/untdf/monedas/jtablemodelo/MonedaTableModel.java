@@ -7,7 +7,7 @@ package ar.edu.untdf.monedas.jtablemodelo;
 import javax.swing.table.AbstractTableModel;
 
 import ar.edu.untdf.monedas.MonedasApp;
-import ar.edu.untdf.monedas.controllers.MonedaJpaController;
+import ar.edu.untdf.monedas.controller.MonedaJpaController;
 import ar.edu.untdf.monedas.modelos.Moneda;
 
 

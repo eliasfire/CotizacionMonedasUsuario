@@ -2,6 +2,7 @@ package ar.edu.untdf.monedas.modelos;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -10,6 +11,10 @@ import java.util.List;
  * 
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Moneda.findAll", query = "SELECT u FROM Moneda u"),
+    @NamedQuery(name = "Moneda.findByMonedaId", query = "SELECT u FROM Moneda u WHERE u.idmoneda = :monedaid"),
+    @NamedQuery(name = "Moneda.findByMoneda", query = "SELECT u FROM Moneda u WHERE u.siglas = :siglas")})
 public class Moneda implements Serializable {
 	private static final long serialVersionUID = 1L;
 

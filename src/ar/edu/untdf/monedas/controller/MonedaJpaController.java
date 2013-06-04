@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ar.edu.untdf.monedas.controllers;
+package ar.edu.untdf.monedas.controller;
 
 import ar.edu.untdf.monedas.controller.exceptions.NonexistentEntityException;
+import ar.edu.untdf.monedas.modelos.Moneda;
 import ar.edu.untdf.monedas.modelos.Moneda;
 
 import java.awt.Image;
@@ -20,6 +21,8 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
@@ -82,17 +85,17 @@ public class MonedaJpaController implements Serializable {
         }
     }
 
-    public void destroy(Long id) throws NonexistentEntityException {
+    public void destroy(int codigo) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             Moneda moneda;
             try {
-            	moneda = em.getReference(Moneda.class, id);
+            	moneda = em.getReference(Moneda.class, codigo);
             	moneda.getIdmoneda();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The cliente with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The cliente with id " + codigo + " no longer exists.", enfe);
             }
             em.remove(moneda);
             em.getTransaction().commit();
@@ -167,5 +170,24 @@ public class MonedaJpaController implements Serializable {
 		return reader.read(0, param);
 
 		}
+	
+	public Moneda findMonedaPorSiglas(String siglas) throws Exception {
+        EntityManager em = getEntityManager();
+        Moneda mon = null;
+        try {
+			System.out.println("consultado " + siglas);
+
+            Query query = em.createNamedQuery("Moneda.findByMoneda");
+            query.setParameter("siglas", siglas);
+
+            return (Moneda) query.getSingleResult();
+        } catch (NoResultException ne){
+            throw new Exception("No se encontró Moneda: " + siglas);
+        } catch (NonUniqueResultException ue){
+            throw new Exception("La conincidencia para el Moneda: " + siglas + ", no es única");
+        } finally {
+            em.close();
+        }
+    }
     
 }

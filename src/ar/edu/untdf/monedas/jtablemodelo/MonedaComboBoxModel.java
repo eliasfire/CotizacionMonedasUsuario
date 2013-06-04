@@ -9,7 +9,7 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 
 
-import ar.edu.untdf.monedas.controllers.MonedaJpaController;
+import ar.edu.untdf.monedas.controller.MonedaJpaController;
 import ar.edu.untdf.monedas.modelos.Moneda;
 
 

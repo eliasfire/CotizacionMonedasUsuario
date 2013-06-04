@@ -6,6 +6,7 @@ package ar.edu.untdf.monedas.modelos;
  */
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -36,4 +37,13 @@ public abstract class Exchange {
     public Moneda getMoneyAt(int index) {
         return monedas.get(index);
     }
+    
+    public void removeMoneda(Moneda m) {
+        monedas.remove(m);
+        this.updateMonedas();
+    }
+
+	public Iterator listIterator() {
+		return monedas.iterator();
+	}
 }

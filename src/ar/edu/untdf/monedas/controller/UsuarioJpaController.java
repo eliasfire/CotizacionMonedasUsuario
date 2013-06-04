@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ar.edu.untdf.monedas.controllers;
+package ar.edu.untdf.monedas.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -210,7 +210,7 @@ public class UsuarioJpaController implements Serializable {
     }
     
  // Busqueda Autocompletar x Usuario
-    public List<Usuario> findUsuarioListByUser(String usuario, String tipoUsuario) {
+    public List<Usuario> findUsuarioListByUser(String usuario) {
         EntityManager em = getEntityManager();
         try {
             usuario = usuario.trim();
@@ -220,7 +220,6 @@ public class UsuarioJpaController implements Serializable {
             }
             Query query = em.createQuery("SELECT u FROM Usuario u WHERE UPPER(u.usuario) " +
                                          "LIKE '%" + usuario.toUpperCase() + "%' " +
-                                         "AND UPPER(u.tipousuario) LIKE '%" + tipoUsuario.toUpperCase() + "%' " +
                                          "ORDER BY u.usuario");
             return query.getResultList();
         } finally {

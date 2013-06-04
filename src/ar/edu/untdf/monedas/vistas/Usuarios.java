@@ -4,8 +4,8 @@ import javax.persistence.Persistence;
 import javax.swing.table.DefaultTableModel;
 
 import ar.edu.untdf.monedas.MonedasApp;
+import ar.edu.untdf.monedas.controller.UsuarioJpaController;
 import ar.edu.untdf.monedas.controller.exceptions.NonexistentEntityException;
-import ar.edu.untdf.monedas.controllers.UsuarioJpaController;
 import ar.edu.untdf.monedas.jtablemodelo.UsuarioTableModel;
 import ar.edu.untdf.monedas.modelos.Usuario;
 

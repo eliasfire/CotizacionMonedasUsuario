@@ -7,8 +7,8 @@ package ar.edu.untdf.monedas;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import ar.edu.untdf.monedas.controllers.MonedaJpaController;
-import ar.edu.untdf.monedas.controllers.UsuarioJpaController;
+import ar.edu.untdf.monedas.controller.MonedaJpaController;
+import ar.edu.untdf.monedas.controller.UsuarioJpaController;
 
 /**
  *

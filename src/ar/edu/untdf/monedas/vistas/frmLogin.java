@@ -7,7 +7,7 @@ import java.awt.event.*;
 import javax.persistence.Persistence;
 import javax.swing.*;
 
-import ar.edu.untdf.monedas.controllers.UsuarioJpaController;
+import ar.edu.untdf.monedas.controller.UsuarioJpaController;
 import ar.edu.untdf.monedas.modelos.Usuario;
 import ar.edu.untdf.monedas.modelos.VariablesGlobales;
 

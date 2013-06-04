@@ -30,7 +30,7 @@ public class ServiceOpen implements Service {
     public void getChange(ArrayList<Moneda> moneyList) {
         try {
 
-            String request = "http://openexchangerates.org/api/latest.json?app_id=25fb0f55591b47abb1b86d90926679a4";
+            String request = "http://openexchangerates.org/api/latest.json?app_id=b27ff6ed62aa46fcaf8b0d1a68942617";
             HttpClient client = new DefaultHttpClient();
             HttpGet method = new HttpGet(request);
             HttpResponse response = client.execute(method);

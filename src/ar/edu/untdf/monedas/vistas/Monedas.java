@@ -14,6 +14,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import javax.imageio.ImageIO;
 import javax.persistence.Persistence;
 import javax.swing.GroupLayout;
@@ -24,17 +27,19 @@ import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.TitledBorder;
 import ar.edu.untdf.monedas.MonedasApp;
-import ar.edu.untdf.monedas.controllers.MonedaJpaController;
-import ar.edu.untdf.monedas.controllers.UsuarioJpaController;
+import ar.edu.untdf.monedas.controller.MonedaJpaController;
+import ar.edu.untdf.monedas.controller.UsuarioJpaController;
 import ar.edu.untdf.monedas.jtablemodelo.ExchangeComboBoxModel;
 import ar.edu.untdf.monedas.jtablemodelo.MonedaTableListener;
 import ar.edu.untdf.monedas.modelos.Exchange;
 import ar.edu.untdf.monedas.modelos.Moneda;
 import ar.edu.untdf.monedas.modelos.OpenModel;
-import ar.edu.untdf.monedas.modelos.Usuario;
+import ar.edu.untdf.monedas.modelos.VariablesGlobales;
 
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 /**
  *
  * @author Matias
@@ -85,7 +90,9 @@ public class Monedas extends javax.swing.JInternalFrame {
         button.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
         		  ex.addMoneda((Moneda)comboBox.getSelectedItem());
-        	      ex.updateMonedas();table.updateUI();        
+        		  //listaMonedas.add((Moneda)comboBox.getSelectedItem());
+        	      ex.updateMonedas();
+        	      table.updateUI();        
         	}
         });
         button.setText("Agregar moneda");
@@ -102,16 +109,56 @@ public class Monedas extends javax.swing.JInternalFrame {
         button_1.setText("Actualizar cotizaciones");
         
         JButton button_2 = new JButton();
+        button_2.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+       
+				if (fila > -1){
+                
+                    try {
+          
+              		  ex.removeMoneda((Moneda)comboBox.getSelectedItem());
+              	      ex.updateMonedas();
+              	      table.setModel(new OpenModel(ex)); 
+        				/*mon.destroy(mon.findMonedaPorSiglas(siglas).getIdmoneda());
+        				listaMonedas.remove((Moneda)comboBox.getSelectedItem());
+        				table.setModel(new MonedaTableModel());*/
+
+        			} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+                    
+                    fila=-1;
+                }
+        	}
+        });
         button_2.setText("Eliminar última moneda");
         
         table = new JTable();
+        table.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent evt) {
+                fila = table.rowAtPoint(evt.getPoint());                 
+
+        	}
+        });
         table.setModel(new OpenModel(ex));
         scrollPane.setColumnHeaderView(table);
         
         JButton btnGuardar = new JButton("Guardar monedas para usuario");
         btnGuardar.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent arg0) {
-        		
+        		Iterator iterador = ex.listIterator(); //Le solicito a la lista que me devuelva un iterador con todos los el elementos contenidos en ella
+        		 
+        		//Mientras que el iterador tenga un proximo elemento
+        		while( iterador.hasNext() ) {
+        		       Moneda b = (Moneda) iterador.next();
+        		       b.setUsuarios(usu.findUsuarioListByUser(VariablesGlobales.usuario));
+        		       mon.create(b);
+        		      
+        		       System.out.println("moneda creada : " + b.getDescripcion());
+
+        		}
         	}
         });
         GroupLayout groupLayout = new GroupLayout(getContentPane());
@@ -175,8 +222,10 @@ public class Monedas extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_aceptarActionPerformed
 
-
-
+    ArrayList listaMonedas = new ArrayList(); //Creo el ArrayList;
+		
+	int fila=-1;
+	
 	public JTable getTableMonedas() {
 		// TODO Auto-generated method stub
 		return table;
