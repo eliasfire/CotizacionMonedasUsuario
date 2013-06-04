@@ -6,10 +6,6 @@ import javax.swing.JOptionPane;
 
 import ar.edu.untdf.monedas.modelos.ExchangeOpen;
 
-/**
- * @web http://jc-mouse.blogspot.com/
- * @author  Mouse
- */
 public class Interfaz extends javax.swing.JFrame {
     
     /**

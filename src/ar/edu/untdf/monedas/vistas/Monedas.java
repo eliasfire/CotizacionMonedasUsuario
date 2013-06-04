@@ -29,11 +29,13 @@ import javax.swing.border.TitledBorder;
 import ar.edu.untdf.monedas.MonedasApp;
 import ar.edu.untdf.monedas.controller.MonedaJpaController;
 import ar.edu.untdf.monedas.controller.UsuarioJpaController;
+import ar.edu.untdf.monedas.controller.exceptions.NonexistentEntityException;
 import ar.edu.untdf.monedas.jtablemodelo.ExchangeComboBoxModel;
 import ar.edu.untdf.monedas.jtablemodelo.MonedaTableListener;
 import ar.edu.untdf.monedas.modelos.Exchange;
 import ar.edu.untdf.monedas.modelos.Moneda;
 import ar.edu.untdf.monedas.modelos.OpenModel;
+import ar.edu.untdf.monedas.modelos.Usuario;
 import ar.edu.untdf.monedas.modelos.VariablesGlobales;
 
 import javax.swing.JComboBox;
@@ -153,12 +155,24 @@ public class Monedas extends javax.swing.JInternalFrame {
         		//Mientras que el iterador tenga un proximo elemento
         		while( iterador.hasNext() ) {
         		       Moneda b = (Moneda) iterador.next();
-        		       b.setUsuarios(usu.findUsuarioListByUser(VariablesGlobales.usuario));
+        		       //b.setUsuarios(usu.findUsuarioListByUser(VariablesGlobales.usuario));
         		       mon.create(b);
         		      
         		       System.out.println("moneda creada : " + b.getDescripcion());
 
         		}
+        		
+        		Usuario user ;
+        		user = usu.findUsuario(VariablesGlobales.idusuario);
+        		user.setMonedas(listaMonedas);
+        		try {
+					usu.edit(user);
+     		       System.out.println("usuario " + user.getUsuario() + "editado");
+
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
         	}
         });
         GroupLayout groupLayout = new GroupLayout(getContentPane());
